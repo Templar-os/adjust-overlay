@@ -5,6 +5,8 @@
 KIBANA_USER=${KIBANA_USER:-kibana}
 
 command="/opt/kibana/bin/kibana"
+command_args="--elasticsearch ${ES_INSTANCE}"
+
 pidfile="/run/kibana.pid"
 command_background="true"
 start_stop_daemon_args="--user=\"${KIBANA_USER}\" --stdout /var/log/kibana/kibana.log --stderr /var/log/kibana/kibana.err"

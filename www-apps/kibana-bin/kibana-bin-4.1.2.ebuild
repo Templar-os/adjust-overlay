@@ -36,6 +36,7 @@ src_install() {
 	insinto "/etc/logrotate.d"
 	newins "${FILESDIR}/${MY_PN}.logrotate" "${MY_PN}"
 
+	newconfd "${FILESDIR}/${MY_PN}.confd" "${MY_PN}"
 	newinitd "${FILESDIR}"/kibana.initd-r2 "${MY_PN}"
 
 	mv * "${D}/opt/${MY_PN}"
