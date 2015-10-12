@@ -17,7 +17,8 @@ LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND=">=app-misc/elasticsearch-1.4.4"
+DEPEND=""
+RDEPEND=""
 
 RESTRICT="strip"
 QA_PREBUILT="opt/kibana/node/bin/node"
