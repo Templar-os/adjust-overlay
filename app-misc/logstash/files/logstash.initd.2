@@ -1,0 +1,43 @@
+#!/sbin/runscript
+
+name=Logstash
+description="Logstash - you know, for logs"
+command=/usr/bin/logstash
+extra_commands="checkconfig"
+
+LS_LOG_FILE=/var/log/${SVCNAME}/logstash.log
+LS_CONF_DIR=/etc/${SVCNAME}/conf.d
+LS_HOME=/var/lib/${SVCNAME}
+
+command_args="${LS_OPTS}"
+command_args="agent --config ${LS_CONF_DIR} --log ${LS_LOG_FILE} ${LS_OPTS}"
+command_background="true"
+pidfile="/run/${SVCNAME}.pid"
+
+start_stop_daemon_args="--user logstash:logstash --chdir /var/lib/${SVCNAME} --env LS_HEAP_SIZE=${LS_HEAP_SIZE}"
+
+checkconfig() {
+        if [ ! -f ${LS_CONF_DIR}/* ]; then
+                eerror "Please put your configuration in ${LS_CONF_DIR}"
+                exit 1
+        fi
+
+        ebegin "Checking your configuration"
+        ${command} ${command_args} --configtest
+        eend $? "Configuration error. Please fix your configuration files."
+}
+
+start_pre() {
+	checkconfig || return 1
+	checkpath --file --owner logstash:logstash -m750 ${pidfile}
+	checkpath --directory --owner logstash:logstash -m750 /var/log/${SVCNAME}
+	checkpath --directory --owner logstash:logstash -m750 ${LS_HOME}
+}
+
+stop() {
+	ebegin "Stopping logstash"
+	start-stop-daemon --stop \
+		--pidfile=${pidfile} \
+		--retry=TERM/20/KILL/5
+	eend $?
+}
