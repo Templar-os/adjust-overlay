@@ -12,12 +12,12 @@ LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
-SRC_URI="http://www.aerospike.com/artifacts/${PN}/${PV}/${P}-debian7.tgz"
+SRC_URI="http://www.aerospike.com/artifacts/${PN}/${PV}/${P}-ubuntu16.04.tgz"
 
 RDEPEND="app-crypt/gcr"
 DEPEND="${RDEPEND}"
 
-S="${WORKDIR}/${P}-debian7"
+S="${WORKDIR}/${P}-ubuntu16.04"
 
 RESTRICT="fetch"
 
@@ -30,8 +30,8 @@ pkg_setup() {
 }
 
 src_prepare() {
-	local server_deb="${P}.debian7.x86_64.deb"
-	local tools_deb="aerospike-tools-${TOOLS_PV}.debian7.x86_64.deb"
+	local server_deb="${P}.ubuntu16.04.x86_64.deb"
+	local tools_deb="aerospike-tools-${TOOLS_PV}.ubuntu16.04.x86_64.deb"
 
 	ar x "${server_deb}" || die
 	tar xzf data.tar.gz && rm data.tar.gz || die
