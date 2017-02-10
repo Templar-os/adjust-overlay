@@ -34,10 +34,10 @@ src_prepare() {
 	local tools_deb="aerospike-tools-${TOOLS_PV}.ubuntu16.04.x86_64.deb"
 
 	ar x "${server_deb}" || die
-	tar xzf data.tar.gz && rm data.tar.gz || die
+	tar xJf data.tar.xz && rm data.tar.xz || die
 
 	ar x "${tools_deb}" || die
-	tar xzf data.tar.gz && rm data.tar.gz || die
+	tar xJf data.tar.xz && rm data.tar.xz || die
 
 	rm *.deb asinstall control.tar.gz debian-binary LICENSE SHA256SUMS
 	rm usr/bin/{asfixownership,asmigrate2to3}
